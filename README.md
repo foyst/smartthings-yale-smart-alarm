@@ -1,1 +1,1 @@
-# smartthings-yale-smart-alarm
+# Smartthings - Yale Smart Alarm Integration
