@@ -6,6 +6,12 @@ provider:
   runtime: nodejs16.x
   region: eu-west-1
   memorySize: 128
+  environment:
+    APP_ID: ${param:appId}
+    CLIENT_ID: ${param:clientId}
+    CLIENT_SECRET: ${param:clientSecret}
+    YALE_USERNAME: ${param:yaleUsername}
+    YALE_PASSWORD: ${param:yalePassword}
 
 functions:
   yalealarm:
