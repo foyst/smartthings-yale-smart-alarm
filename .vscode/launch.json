@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Yale Function",
+            "program": "${workspaceFolder}/node_modules/.bin/sls",
+            "args": [
+                "invoke",
+                "local",
+                "-f",
+                "yalealarm",
+                "--data",
+                "{\"lifecycle\":\"EVENT\",\"executionId\":\"C29AE3FA-DBD6-4F7D-9614-2C5F910F7F47\",\"appId\":\"30a3df02-beda-48d1-9dfb-87efc6219baa\",\"locale\":\"en\",\"version\":\"0.1.0\",\"eventData\":{\"authToken\":\"eyJraWQiOiI5dmtsOTkyYTE4ZmVNX045X2tuQ2I2dHh6Ri1LdnBwVkFNNTYtOFIwX21BIiwiYWxnIjoiUlMyNTYifQ.eyJwcmluY2lwYWwiOiJpbnN0YWxsZWRhcHA6YzUyMTk4OTItYmQ4Mi00NTU3LTkwYzAtODNhZWI2NDJmNTA3OjAzZGQ5ZTdjLTUwMTUtNDVjMS05MzFhLTAyMTdhOTkwYzFkYSIsImluc3RhbGxlZF9hcHBfaWQiOiJjNTIxOTg5Mi1iZDgyLTQ1NTctOTBjMC04M2FlYjY0MmY1MDciLCJzY29wZSI6WyJyOnNlY3VyaXR5OmxvY2F0aW9uczoqOmFybXN0YXRlIl0sImFjY2Vzc190aWVyIjowLCJleHAiOjE2NjU1MjIzMzMsImNsaWVudF9pZCI6ImJkMWViZmU3LTdiYWItNDZlYi04YjA3LTM0ZjBkNTZjYzliMSJ9.hNq_YOo_-KGcVdjUDlxd1mdvOi7GXTnpWFn6QWFEeBflujsjtjbak5YN8-iCQzaltB6mhTiaoRpl0fpF0R5olvx39pig35pvkzWFKL8ujiYG6WsMqc_nVhDMO-2c3s3F23JAtl8rknxJhhiNwR2044msvQaAdUpp39nL3oTZqmpiOz0fRRCkLkqSmu19smTELdQD9vNMeJR6gzZzsl2Goha0kwYwkGCZ06EXUw4b1g2-6SiF82nBpTSRHHJeb0r_aJls7vgG9IDw3Tn32kO94GQZhRwxxDTIu0ziDggXtps3ACPNgrKg6sNU8mi70ibLOUcRPNmplFD0TjfJigghmg\",\"installedApp\":{\"installedAppId\":\"c5219892-bd82-4557-90c0-83aeb642f507\",\"locationId\":\"03dd9e7c-5015-45c1-931a-0217a990c1da\",\"config\":{},\"permissions\":[\"r:security:locations:*:armstate\"]},\"events\":[{\"eventTime\":\"2022-10-11T21:00:33Z\",\"eventType\":\"SECURITY_ARM_STATE_EVENT\",\"securityArmStateEvent\":{\"eventId\":\"bf3745dd-49a7-11ed-9149-e9bc7ebc05b1\",\"locationId\":\"03dd9e7c-5015-45c1-931a-0217a990c1da\",\"armState\":\"ARMED_AWAY\",\"optionalArguments\":{}}}]},\"settings\":{}}"
+            ],
+            "preLaunchTask": "tsc: build - tsconfig.json",
+            "outFiles": [
+                "${workspaceFolder}/.build/**/*.js"
+            ]
+          }
+    ]
+}
