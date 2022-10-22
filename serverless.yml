@@ -12,10 +12,34 @@ provider:
     CLIENT_SECRET: ${param:clientSecret}
     YALE_USERNAME: ${param:yaleUsername}
     YALE_PASSWORD: ${param:yalePassword}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 'dynamodb:PutItem'
+          Resource: 
+          - 'Fn::Join': [':', ['arn:aws:dynamodb:eu-west-1', { Ref: 'AWS::AccountId' }, 'table/SmartThingsYaleTokens']]
+          
 
 functions:
   yalealarm:
     handler: handler.handle
+
+resources: # CloudFormation template syntax from here on.
+      Resources:
+        usersTable:
+          Type: AWS::DynamoDB::Table
+          Properties:
+            TableName: SmartThingsYaleTokens
+            AttributeDefinitions:
+              - AttributeName: installedAppId
+                AttributeType: S
+            KeySchema:
+              - AttributeName: installedAppId
+                KeyType: HASH
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
 
 plugins:
   - serverless-plugin-typescript
