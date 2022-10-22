@@ -12,10 +12,14 @@ const smartApp = new SmartApp()
     .disableCustomDisplayName(true)
     .page('mainPage', (_, page) => {
 
-        page.section('Text', section => {
-
+        page.section('intro', section => {
             section
-                .paragraphSetting('info').text("This is some test text, OH YEAH!")
+                .paragraphSetting('info').description("Please enter your Yale credentials below to integrate with SmartThings")
+        })
+
+        page.section('yaleCredentials', section => {
+            section.emailSetting('email')
+            section.passwordSetting('password')
         })
     })
     .installed(updatedHandler)
