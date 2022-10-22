@@ -8,11 +8,11 @@ const yaleClient = axios.create({
 
 export default {
 
-    async loginWithUsernameAndPassword(): Promise<Tokens> {
+    async loginWithUsernameAndPassword(installedAppId: string, username: string, password: string): Promise<Tokens> {
         const response = await yaleClient.post('/o/token/', {
             grant_type: "password",
-            username: process.env.YALE_USERNAME,
-            password: process.env.YALE_PASSWORD,
+            username: username,
+            password: password,
         }, {
             headers: {
                 "Authorization": `Basic ${AppSettings.yaleAuthToken}`,
@@ -23,7 +23,7 @@ export default {
 
         const newTokens: Tokens = {accessToken: response.data.access_token, refreshToken: response.data.refresh_token}
 
-        yaleTokenStore.put("blah", newTokens)
+        yaleTokenStore.put(installedAppId, newTokens)
 
         return newTokens
     },
