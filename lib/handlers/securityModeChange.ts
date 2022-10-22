@@ -1,6 +1,5 @@
 import { SmartAppContext } from "@smartthings/smartapp"
 import { AppEvent } from "@smartthings/smartapp/lib/lifecycle-events"
-import { Tokens } from "../../constants"
 import yaleClient from "../yaleClient"
 
 export default async function (context: SmartAppContext,

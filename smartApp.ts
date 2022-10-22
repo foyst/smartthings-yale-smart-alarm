@@ -1,4 +1,4 @@
-import { SmartApp } from '@smartthings/smartapp'
+import { SectionSetting, SmartApp } from '@smartthings/smartapp'
 import updatedHandler from './lib/handlers/updated'
 import uninstalledHandler from './lib/handlers/uninstalled'
 import securityArmStateEventHandler from './lib/handlers/securityModeChange'
@@ -12,14 +12,15 @@ const smartApp = new SmartApp()
     .disableCustomDisplayName(true)
     .page('mainPage', (_, page) => {
 
-        page.section('intro', section => {
-            section
-                .paragraphSetting('info').description("Please enter your Yale credentials below to integrate with SmartThings")
+        page.name("Yale SmartThings Integration")
+        page.section('Instructions', section => {
+            section.paragraphSetting('info').name("Instructions").description("Please enter your Yale credentials below to integrate with SmartThings")
         })
 
         page.section('yaleCredentials', section => {
-            section.emailSetting('email')
-            section.passwordSetting('password')
+            section.name("Yale Credentials")
+            section.emailSetting('email').name("Email Address")
+            section.passwordSetting('password').name("Password")
         })
     })
     .installed(updatedHandler)
