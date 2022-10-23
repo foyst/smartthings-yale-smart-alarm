@@ -10,8 +10,6 @@ provider:
     APP_ID: ${param:appId}
     CLIENT_ID: ${param:clientId}
     CLIENT_SECRET: ${param:clientSecret}
-    YALE_USERNAME: ${param:yaleUsername}
-    YALE_PASSWORD: ${param:yalePassword}
   iam:
     role:
       statements:
@@ -20,7 +18,6 @@ provider:
           Resource: 
           - 'Fn::Join': [':', ['arn:aws:dynamodb:eu-west-1', { Ref: 'AWS::AccountId' }, 'table/SmartThingsYaleTokens']]
           
-
 functions:
   yalealarm:
     handler: handler.handle
