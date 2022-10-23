@@ -82,6 +82,7 @@ class YaleClient {
             })
         } catch (error) {
             if (axios.isAxiosError(error) && isUnathenticated(error)) {
+                console.log("Access token expired, aquiring new token using refresh token")
                 const newTokens = await this.refreshAccessToken(tokens)
                 this.setAlarmStateWithTokens(alarmState, newTokens)
                 return
