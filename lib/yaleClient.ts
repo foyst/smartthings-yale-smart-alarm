@@ -1,3 +1,4 @@
+import { SmartAppContext } from "@smartthings/smartapp";
 import axios, { AxiosError } from "axios";
 import { AppSettings, Tokens } from "../constants";
 import yaleTokenStore from "./yaleTokenStore";
@@ -6,9 +7,23 @@ const yaleClient = axios.create({
     baseURL: "https://mob.yalehomesystem.co.uk/yapi"
 })
 
-export default {
+export function createYaleClient(context: SmartAppContext): YaleClient {
+    const installedAppId = context.api.config.installedAppId
+    if (installedAppId === undefined)
+        throw new Error("Installed App Id is undefined")
 
-    async loginWithUsernameAndPassword(installedAppId: string, username: string, password: string): Promise<Tokens> {
+    return new YaleClient(installedAppId)
+} 
+
+class YaleClient {
+
+    installedAppId: string
+
+    constructor(installedAppId: string) {
+        this.installedAppId = installedAppId
+    }
+
+    async loginWithUsernameAndPassword(username: string, password: string): Promise<Tokens> {
         const response = await yaleClient.post('/o/token/', {
             grant_type: "password",
             username: username,
@@ -23,10 +38,10 @@ export default {
 
         const newTokens: Tokens = {accessToken: response.data.access_token, refreshToken: response.data.refresh_token}
 
-        yaleTokenStore.put(installedAppId, newTokens)
+        yaleTokenStore.put(this.installedAppId, newTokens)
 
         return newTokens
-    },
+    }
 
     async refreshAccessToken(tokens: Tokens): Promise<Tokens> {
         const response = await yaleClient.post('/o/token/', {
@@ -42,16 +57,16 @@ export default {
 
         const newTokens: Tokens = {accessToken: response.data.access_token, refreshToken: response.data.refresh_token}
 
-        yaleTokenStore.put("blah", newTokens)
+        yaleTokenStore.put(this.installedAppId, newTokens)
 
         return newTokens
-    },
+    }
 
     async setAlarmState(alarmState: string) {
 
-        const tokens = await yaleTokenStore.get("blah");
+        const tokens = await yaleTokenStore.get(this.installedAppId);
         this.setAlarmStateWithTokens(alarmState, tokens)
-    },
+    }
     
     async setAlarmStateWithTokens(alarmState: string, tokens: Tokens) {
         const data = new URLSearchParams({
@@ -73,6 +88,10 @@ export default {
             }
             else throw error;
         }
+    }
+
+    async uninstall() {
+        yaleTokenStore.delete(this.installedAppId)
     }
 }
 

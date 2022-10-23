@@ -1,6 +1,6 @@
 import { SmartAppContext } from "@smartthings/smartapp"
 import { AppEvent } from "@smartthings/smartapp/lib/lifecycle-events"
-import yaleClient from "../yaleClient"
+import { createYaleClient } from "../yaleClient"
 
 export default async function (context: SmartAppContext,
     eventData: AppEvent.SecurityArmStateEvent,
@@ -9,34 +9,28 @@ export default async function (context: SmartAppContext,
     const alarmState = eventData.armState
     console.log("Home Monitor state is now " + alarmState)
 
+    const yaleClient = createYaleClient(context)
+
     switch (alarmState) {
         case "ARMED_AWAY": {
             console.log("Arming Yale (Fully Arm)")
-            const armResponse = await armYaleAway()
+            const armResponse = await yaleClient.setAlarmState("arm")
             break;
         }
         case "ARMED_STAY": {
             console.log("Arming Yale (Part Arm)")
-            const armResponse = await armYaleStay()
+            const armResponse = yaleClient.setAlarmState("home")
             break;
         }
         case "DISARMED": {
             console.log("Disarming Yale")
-            const armResponse = await disarmYale()
+            const armResponse = yaleClient.setAlarmState("disarm")
             break;
+        }
+        default: {
+            const errorMessage = `Unknown alarm state received: ${alarmState}`
+            console.error(errorMessage)
+            throw new Error(`Unknown alarm state received: ${alarmState}`)
         }
     }    
 }
-
-function armYaleAway() {
-    return yaleClient.setAlarmState("arm");
-}
-
-function armYaleStay() {
-    return yaleClient.setAlarmState("home");
-}
-
-function disarmYale() {
-    return yaleClient.setAlarmState("disarm");
-}
-
